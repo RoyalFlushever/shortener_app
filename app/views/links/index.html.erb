@@ -1,5 +1,6 @@
-<% if flash[:short]%>
+<%= link_to 'Top Links',  top_links_links_path, class: 'btn btn-primary mb-3 mt-3' %><br>
 
+<% if flash[:short]%>
   Your link - <%= link_to flash[:short], flash[:short], class: 'btn btn-success mb-3 '%><br>
 <% end%>
 <% if flash[:errors]%>

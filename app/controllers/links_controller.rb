@@ -21,6 +21,10 @@ class LinksController < ApplicationController
       redirect_to :root
     end
   end
+
+  def top_links
+    @links = Link.order(visits: :desc).limit(100)
+  end
   
   private
 

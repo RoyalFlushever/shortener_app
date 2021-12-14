@@ -1,0 +1,24 @@
+<h2>Top links</h2>
+<%= link_to 'Back', root_path, class: 'btn btn-primary'%>
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Link</th>
+      <th>Short url</th>
+      <th>Visits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @links.each_with_index do |l, i| %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= l.title %></td>
+        <td><%= link_to l.url, l.url %></td>
+        <td><%= link_to root_url + l.short, root_url + l.short %></td>
+        <td><b><%= l.visits%></b></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
