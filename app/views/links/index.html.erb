@@ -1,0 +1,21 @@
+<% if flash[:short]%>
+
+  Your link - <%= link_to flash[:short], flash[:short], class: 'btn btn-success mb-3 '%><br>
+<% end%>
+<% if flash[:errors]%>
+  <%= flash[:errors].join(',') %><br>
+<% end%>
+
+<%= form_with model: Link.new do |form| %>
+  <div class="form-group">
+    <div class="row">
+        <%= form.label :url, 'Link URL'%>
+      <div class="col-8">
+        <%= form.text_field :url, class: 'form-control' %>
+      </div>
+      <div class="col-4">
+        <%= form.submit 'Add website', class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
