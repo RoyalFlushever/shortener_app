@@ -28,4 +28,20 @@ RSpec.describe Link, type: :model do
     end
 
   end
+
+  describe 'Shorteners' do
+    it 'create correct shot version for record' do
+      website = Link.create(url: 'https://example.com', id: 1)
+      expect(website.short).to eq('b')
+    end
+
+    it 'return correct website for slug' do
+      website = Link.create(url: 'https://example.com', id: 1)
+      expect(Link.find_short('b')).to eq website
+    end
+
+    it 'return nil for not existing website' do
+      expect(Link.find_short('bd')).to eq nil
+    end
+  end
 end
