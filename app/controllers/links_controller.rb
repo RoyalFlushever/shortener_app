@@ -10,6 +10,17 @@ class LinksController < ApplicationController
     end
     redirect_to :root
   end
+
+  def show
+    link = Link.find_short(params[:slug])
+    if link
+      link.update(visits: link.visits + 1)
+      redirect_to link.url
+    else
+      flash[:errors] = ['Link not found']
+      redirect_to :root
+    end
+  end
   
   private
 
