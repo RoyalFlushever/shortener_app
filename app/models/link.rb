@@ -3,6 +3,8 @@ class Link < ApplicationRecord
   validates :url, format: URI::DEFAULT_PARSER.make_regexp(%w[http https])
   validates :visits, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  after_create :get_title
+
   SLUG_CHARACTERS = ('a'..'z').to_a + ('A'..'Z').to_a
 
   def short
@@ -24,5 +26,11 @@ class Link < ApplicationRecord
     base = SLUG_CHARACTERS.length
     slug.each_char { |c| i = i * base + SLUG_CHARACTERS.index(c) }
     find_by(id: i)
+  end
+
+  private
+
+  def get_title
+    LoadTitleJob.perform_later(id)
   end
 end
