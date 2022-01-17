@@ -6,8 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
-links = %w(
+links = %w[
   youtube.com support.google.com www.google.com play.google.com microsoft.com www.blogger.com apple.com linkedin.com
   en.wikipedia.org maps.google.com youtu.be wordpress.org mozilla.org cloudflare.com docs.google.com sites.google.com
   adobe.com googleusercontent.com plus.google.com drive.google.com whatsapp.com accounts.google.com europa.eu bp.blogspot.com
@@ -59,9 +58,9 @@ links = %w(
   indiegogo.com digg.com alicdn.com gutenberg.org state.gov ucoz.ru hbr.org utexas.edu billboard.com thoughtco.com thestar.com
   namesilo.com orange.fr venturebeat.com oecd.org abc.com asus.com zeit.de iso.org techradar.com merriam-webster.com
   entrepreneur.com pnas.org usda.gov fortune.com mercurynews.com imageshack.com twimg.com worldbank.org e-recht24.de box.com dot.tk
-  arstechnica.com lg.com bp0.blogger.com pcmag.com salon.com)
+  arstechnica.com lg.com bp0.blogger.com pcmag.com salon.com
+]
 
 links.sample(150).each do |w|
-  Link.create(url: 'https://' + w, visits: rand(10000...1000000))
+  Link.create(url: "https://#{w}", visits: rand(10_000...1_000_000), remote_ip: Array.new(4) { rand(256) }.join('.'))
 end
-

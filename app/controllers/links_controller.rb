@@ -25,10 +25,11 @@ class LinksController < ApplicationController
   def top_links
     @links = Link.order(visits: :desc).limit(100)
   end
-  
+
   private
 
   def link_params
-    params.require(:link).permit(:url)
+    params[:link][:remote_ip] = request.remote_ip
+    params.require(:link).permit(:url, :remote_ip)
   end
 end

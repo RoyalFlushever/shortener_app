@@ -3,6 +3,8 @@ class Link < ApplicationRecord
   validates :url, format: URI::DEFAULT_PARSER.make_regexp(%w[http https])
   validates :visits, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  validate :user_limit
+
   after_create :get_title
 
   SLUG_CHARACTERS = ('a'..'z').to_a + ('A'..'Z').to_a
@@ -29,6 +31,12 @@ class Link < ApplicationRecord
   end
 
   private
+
+  def user_limit
+    if Link.where(created_at: Date.today.all_day, remote_ip: remote_ip).count >= 10
+      errors.add(:url, 'can not be created more than 10 times per day')
+    end
+  end
 
   def get_title
     LoadTitleJob.perform_later(id)
