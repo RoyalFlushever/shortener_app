@@ -26,7 +26,6 @@ RSpec.describe Link, type: :model do
     it 'Not valid url format' do
       expect(Link.new(url: 'example.com').valid?).to eq(false)
     end
-
   end
 
   describe 'Shorteners' do
@@ -45,21 +44,17 @@ RSpec.describe Link, type: :model do
     end
 
     it 'can be created up to 10 times per day' do
-      count = 0
-      10.times do |_|
-        website = Link.new(url: 'https://example.com', remote_ip: '127.0.0.1')
-        count += 1 if website.save
-      end
-      expect(count).to eq(10)
+      Link.create(Array.new(9) { { url: 'https://example.com', remote_ip: '127.0.0.1' } })
+      website = Link.new(url: 'https://example.com', remote_ip: '127.0.0.1')
+      expect(website.save).to eq true
     end
 
     it 'can not be created more than 10 times per day' do
-      count = 0
-      11.times do |_|
-        website = Link.new(url: 'https://example.com', remote_ip: '127.0.0.1')
-        count += 1 if website.save
-      end
-      expect(count).to be <= 10
+      Link.create(Array.new(10) { { url: 'https://example.com', remote_ip: '127.0.0.1' } })
+
+      website = Link.new(url: 'https://example.com', remote_ip: '127.0.0.1')
+      expect(website.save).to be false
+      expect(website.errors.messages[:url]).to eq ['can not be created more than 10 times per day']
     end
   end
 end
