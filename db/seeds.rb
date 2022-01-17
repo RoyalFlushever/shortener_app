@@ -62,6 +62,6 @@ links = %w(
   arstechnica.com lg.com bp0.blogger.com pcmag.com salon.com)
 
 links.sample(150).each do |w|
-  Link.create(url: 'https://' + w, visits: rand(10000...1000000))
+  Link.create(url: 'https://' + w, visits: rand(10000...1000000), remote_ip: "#{rand(0...256)}.#{rand(0...256)}.#{rand(0...256)}.#{rand(0...256)}")
 end
 

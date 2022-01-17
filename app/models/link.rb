@@ -7,6 +7,15 @@ class Link < ApplicationRecord
 
   SLUG_CHARACTERS = ('a'..'z').to_a + ('A'..'Z').to_a
 
+  def save
+    if Link.where({ created_at: Date.today.all_day, remote_ip: remote_ip }).count >= 10
+      errors.add(:title, "Url can not be created more than 10 times per day")
+      return nil
+    end
+
+    super
+  end
+
   def short
     i = id
 

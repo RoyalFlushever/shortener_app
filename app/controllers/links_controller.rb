@@ -29,6 +29,8 @@ class LinksController < ApplicationController
   private
 
   def link_params
-    params.require(:link).permit(:url)
+    new_params = params.require(:link).permit(:url)
+    new_params[:remote_ip] = request.remote_ip
+    new_params
   end
 end

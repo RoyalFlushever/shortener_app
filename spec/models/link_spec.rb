@@ -43,5 +43,23 @@ RSpec.describe Link, type: :model do
     it 'return nil for not existing website' do
       expect(Link.find_short('bd')).to eq nil
     end
+
+    it 'can be created up to 10 times per day' do
+      count = 0
+      10.times do |_|
+        website = Link.new(url: 'https://example.com', remote_ip: '127.0.0.1')
+        count += 1 if website.save
+      end
+      expect(count).to eq(10)
+    end
+
+    it 'can not be created more than 10 times per day' do
+      count = 0
+      11.times do |_|
+        website = Link.new(url: 'https://example.com', remote_ip: '127.0.0.1')
+        count += 1 if website.save
+      end
+      expect(count).to be <= 10
+    end
   end
 end
